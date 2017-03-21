@@ -1,6 +1,7 @@
 ﻿using JwtLiftoff.Data;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -23,7 +24,7 @@ namespace JwtLiftoff.Services
             if(userStorage.ContainsKey(user.Username))
             {
                 var userMatch = userStorage.FirstOrDefault(k => k.Key == user.Username);
-                if (userMatch.Value == user.Username)
+                if (userMatch.Value == user.Password)
                 {
                     return Task.FromResult(new ClaimsIdentity(
                         new GenericIdentity(user.Username, "Token"),
@@ -36,6 +37,35 @@ namespace JwtLiftoff.Services
             }
 
             return Task.FromResult<ClaimsIdentity>(null);
+        }
+
+        public static JwtSecurityToken SignJwtToken(JwtIssuerOptions options, IEnumerable<Claim> grantedClaims)
+        {
+            return new JwtSecurityToken(
+                issuer: options.Issuer,
+                audience: options.Audience,
+                notBefore: options.NotBefore,
+                expires: options.Expiration,
+                signingCredentials: options.SigningCredentials,
+
+                claims: grantedClaims
+            );
+        }
+
+        public static string EncodeToString(JwtSecurityToken jwt)
+        {
+            return new JwtSecurityTokenHandler().WriteToken(jwt);
+        }
+
+        public static async Task<List<Claim>> GenerateClaimsForUserAsync(UserIdentity user, ClaimsIdentity identity, JwtIssuerOptions options)
+        {
+            return new List<Claim>()
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+                new Claim(JwtRegisteredClaimNames.Jti, await options.JtiGenerator()),
+                new Claim(JwtRegisteredClaimNames.Iat, DateTimeHelper.ToUnixEpochDate(options.IssuedAt).ToString(), ClaimValueTypes.Integer64),
+                identity.FindFirst(user.Username)
+            };
         }
 
         public static void ValidateJwtOptions(JwtIssuerOptions options)

@@ -13,7 +13,7 @@ namespace JwtLiftoff.Services
     public class ConfigurationService
     {
         // Keep this secret, will ya
-        internal static readonly SymmetricSecurityKey SigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("TotallySecret"));
+        internal static readonly SymmetricSecurityKey SigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("TotallySecretSigningKey"));
 
         internal const string ISSUER = "UberJwtServer";
         internal const string AUDIENCE = "https://localhost/";
