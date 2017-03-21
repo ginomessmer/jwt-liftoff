@@ -14,7 +14,7 @@ namespace JwtLiftoff.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return new OkObjectResult(new[] { "Aww, what's in the box?!?", "https://youtu.be/0cmqwbZa6_w" });
+            return new OkObjectResult("https://youtu.be/0cmqwbZa6_w");
         }
     }
 }
