@@ -15,7 +15,7 @@ namespace JwtLiftoff.Services
         private static Dictionary<string, string> userStorage = new Dictionary<string, string>()
         {
             { "Default", "not-so-secret" },
-            { "Client", "biz" },
+            { "Brad Pitt", "se7en" },
             { "Rookie", "hello-world" }
         };
 
