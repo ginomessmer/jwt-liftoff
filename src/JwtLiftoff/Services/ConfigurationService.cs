@@ -49,7 +49,7 @@ namespace JwtLiftoff.Services
                 services.AddAuthorization(options => 
                 {
                     // Add policies like 'UberPolicy' by 'Policy' => 'Uber'
-                    options.AddPolicy($"{name}Policy", policy => policy.RequireClaim("Policy", name));
+                    options.AddPolicy($"{name}Policy", policy => policy.RequireClaim("Claim", name));
                 });
             }
         }
