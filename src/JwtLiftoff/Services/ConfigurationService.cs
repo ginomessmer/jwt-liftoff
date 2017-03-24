@@ -42,6 +42,29 @@ namespace JwtLiftoff.Services
             });
         }
 
+        public static void AddSwagger(IServiceCollection services)
+        {
+            services.AddLogging();
+            services.AddSwaggerGen(config =>
+            {
+                config.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info()
+                {
+                    Title = "JWT Liftoff",
+                    Contact = new Swashbuckle.AspNetCore.Swagger.Contact() { Url = "https://github.com/ginomessmer/jwt-liftoff" },
+                    Description = "JWT sample based on ASP.NET Core"
+                });
+            });
+        }
+
+        public static void EnableSwagger(IApplicationBuilder app)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(config =>
+            {
+                config.SwaggerEndpoint("/swagger/v1/swagger.json", "JWT Liftoff");
+            });
+        }
+
         public static void AddAuthorizationPolicies(IServiceCollection services, List<string> policyNames)
         {
             foreach(string name in policyNames)
