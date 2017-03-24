@@ -7,6 +7,7 @@ using JwtLiftoff.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
+using JwtLiftoff.Common.Swagger;
 
 namespace JwtLiftoff.Services
 {
@@ -53,6 +54,8 @@ namespace JwtLiftoff.Services
                     Contact = new Swashbuckle.AspNetCore.Swagger.Contact() { Url = "https://github.com/ginomessmer/jwt-liftoff" },
                     Description = "JWT sample based on ASP.NET Core"
                 });
+
+                config.OperationFilter<JwtAuthorizationFilter>();
             });
         }
 
