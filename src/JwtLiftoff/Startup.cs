@@ -29,6 +29,7 @@ namespace JwtLiftoff
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigurationService.AddMvcConfig(services);                                // Add MVC
+            ConfigurationService.AddSwagger(services);
             ConfigurationService.ConfigureJwt(services);                                // Configure JWT options
             ConfigurationService.AddAuthorizationPolicies(services, new List<string>()  // Add authorization policies
             {
@@ -41,6 +42,7 @@ namespace JwtLiftoff
         {
             app.UseDeveloperExceptionPage();
             ConfigurationService.AddJwtAppBuilderConfiguration(app);
+            ConfigurationService.EnableSwagger(app);
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

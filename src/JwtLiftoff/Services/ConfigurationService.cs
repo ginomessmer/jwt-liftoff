@@ -7,6 +7,7 @@ using JwtLiftoff.Data;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
+using JwtLiftoff.Common.Swagger;
 
 namespace JwtLiftoff.Services
 {
@@ -39,6 +40,31 @@ namespace JwtLiftoff.Services
                 options.Issuer = ISSUER;
                 options.Audience = AUDIENCE;
                 options.SigningCredentials = new SigningCredentials(SigningKey, SecurityAlgorithms.HmacSha256);
+            });
+        }
+
+        public static void AddSwagger(IServiceCollection services)
+        {
+            services.AddLogging();
+            services.AddSwaggerGen(config =>
+            {
+                config.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info()
+                {
+                    Title = "JWT Liftoff",
+                    Contact = new Swashbuckle.AspNetCore.Swagger.Contact() { Url = "https://github.com/ginomessmer/jwt-liftoff" },
+                    Description = "JWT sample based on ASP.NET Core"
+                });
+
+                config.OperationFilter<JwtAuthorizationFilter>();
+            });
+        }
+
+        public static void EnableSwagger(IApplicationBuilder app)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(config =>
+            {
+                config.SwaggerEndpoint("/swagger/v1/swagger.json", "JWT Liftoff");
             });
         }
 
