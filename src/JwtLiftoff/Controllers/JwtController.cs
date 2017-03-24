@@ -30,7 +30,20 @@ namespace JwtLiftoff.Controllers
 
         #region Methods
 
-        // GET: api/values
+        /// <summary>
+        /// Returns a new JWT token based on the username and password sent through headers.
+        /// Make sure to set Body to x-www-form-urlencoded
+        /// </summary>
+        /// <example><![CDATA[
+        /// POST /api/jwt HTTP/1.1
+        /// Host: localhost
+        /// Content-Type: application/x-www-form-urlencoded
+        /// Cache-Control: no-cache
+        /// username = Rookie & password = hello - world
+        /// ]]>
+        /// </example>
+        /// <param name="user"></param>
+        /// <returns>JWT token for further use in controllers with require auth</returns>
         [HttpPost]          // We'll receive their sign in credentials to validate
         [AllowAnonymous]    // Guests need to receive their JWT tokens
         public async Task<IActionResult> Get([FromForm] UserIdentity user)

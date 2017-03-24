@@ -10,7 +10,14 @@ namespace JwtLiftoff.Data
     /// </summary>
     public class UserIdentity
     {
+        /// <summary>
+        /// Username, also principal of this user
+        /// </summary>
         public string Username { get; set; }
+
+        /// <summary>
+        /// Password
+        /// </summary>
         public string Password { get; set; }
     }
 }

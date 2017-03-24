@@ -11,6 +11,17 @@ namespace JwtLiftoff.Controllers
     [Route("api/[controller]")]
     public class WhatsInTheBoxController : Controller
     {
+        /// <summary>
+        /// Find out what's in the box. Requires JWT auth, see example for further info
+        /// </summary>
+        /// <example><![CDATA[
+        /// GET /api/whatsinthebox HTTP/1.1
+        /// Host: localhost
+        /// Authorization: Bearer <JWT>
+        /// Cache-Control: no-cache
+        /// ]]>
+        /// </example>
+        /// <returns>Secret stuff from the box</returns>
         [HttpGet]
         public IActionResult Get()
         {
